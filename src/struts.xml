@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+	<struts>
+	<constant name="struts.multipart.maxSize" value="83886080"></constant>
+	<constant name="struts.devMode" value="true"></constant>
+	<package name="default" extends="struts-default">
+	<interceptors>
+	<interceptor name="my" class="com.panda.intercepter.MyIntercepter"></interceptor>
+	</interceptors>
+	<!-- <global-results>
+	<result name="error">/error.jsp</result>
+	</global-results> 
+	<action name="index" class="com.panda.action.UserAction" method="index">
+	<result name="success">/success.jsp</result>
+	<result name="input">/index.jsp</result>
+	</action>-->
+	<action name="FileAction" class="com.panda.action.FileAction" method="DealFile">
+	<interceptor-ref name="defaultStack">
+	<param name="fileUpload.allowedExtensions">.jpg,.png</param>
+	</interceptor-ref>
+	<result name="success">/success.jsp</result>
+	<result name="input">/MyJsp.jsp</result>
+	</action>
+	<action name="*" class="com.panda.action.LoginAction" method="{1}">
+	<interceptor-ref name="defaultStack">
+	</interceptor-ref>
+	<interceptor-ref name="my"></interceptor-ref>
+	<result name="login">/login.jsp</result>
+	</action>
+	<action name="down" class="com.panda.action.FileDown">
+	<param name="filename">/file/mm.jpg</param>
+	<result type="stream">
+	//指定文件名
+	<param name="inputName">target</param>
+	//指定下载文件的文件名
+	<param name="contentDisposition">attachment;filename=mm.jpg</param>
+	//指定下载的类型
+	<param name="contentType">application/octet-stream</param>
+	</result>
+	</action>
+	</package>
+	</struts>
